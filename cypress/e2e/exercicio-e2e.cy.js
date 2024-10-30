@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
 
+import produtosPages from "../support/page_objects/produtos.pages";
+
+
 context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
   /*  Como cliente 
       Quero acessar a Loja EBAC 
@@ -9,12 +12,15 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
       Preenchendo todas opções no checkout
       E validando minha compra ao final */
 
-  beforeEach(() => {
-      cy.visit('/')
-  });
+      beforeEach(() => {
+        cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+        cy.login('aluno_ebac@teste.com' , 'teste@teste.com')
+        produtosPages.visitarUrl()
+      });
 
   it('Deve fazer um pedido na loja Ebac Shop de ponta a ponta', () => {
-      //TODO: Coloque todo o fluxo de teste aqui, considerando as boas práticas e otimizações
+      produtosPages.buscarProduto('Aether Gym Pant')
+      cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')
       
   });
 
